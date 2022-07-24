@@ -13,13 +13,11 @@ class User < ApplicationRecord
   validates :name, length: { minimum: 2, maximum: 20 }, uniqueness: true
   validates :introduction, length: { maximum: 50 }
 
-  # フォローをした、されたの関係
+  
   has_many :follower, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
+  has_many :followings, through: :follower, source: :followed
   has_many :followed, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
-
-  # 一覧画面で使う
-  has_many :followings, through: :relationships, source: :followed
-  has_many :followers, through: :reverse_of_relationships, source: :follower
+  has_many :followers, through: :followed, source: :follower
 
   def get_profile_image
     (profile_image.attached?) ? profile_image : 'no_image.jpg'
