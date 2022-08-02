@@ -9,9 +9,9 @@ class BooksController < ApplicationController
   end
 
   def index
-    @books = Book.all
+    
     @book = Book.new
-    @all_ranks = Book.create_all_ranks
+    @books = Book.create_all_ranks
 
   end
 
