@@ -11,6 +11,7 @@ class BooksController < ApplicationController
   def index
     @books = Book.all
     @book = Book.new
+    @all_ranks = Book.create_all_ranks
 
   end
 
