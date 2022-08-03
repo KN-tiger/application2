@@ -1,33 +1,45 @@
-<div class="left-button">
-  <%= link_to "ユーザー一覧に戻る", users_path, class:"edit-link" %>
-</div>
-<h4 class="rooms-title">
-  <strong>
-    <%= @another_entries.user.name %>さんとのメッセージ
-  </strong>
+<div class='container px-5 px-sm-0'>
+  <div class='row'>
+    <div class='col-md-2'>
+      <%= link_to rooms_path(current_user),class: 'btn btn-info rounded-pill' do %>
+        <i class="fas fa-envelope"></i> Your DM
+      <%end%>
+    </div>
+    <div class='col-md-9 offset-md-1'>
+      <h4 class="rooms-title">
+        <strong>
+          <%= image_tag @another_entry.user.get_profile_image, size: '50x50' %>
+          <%= @another_entry.user.name %>さんとのメッセージ
+        </strong>
+      </h4>
+      <div class="chats">
+        <div class="chat">
+          <% if @messages.present? %>
+            <% @messages.each do |message| %>
+              <div class="chat-box">
+                <div class="chat-face">
+                  <%= image_tag message.user.get_profile_image, size: '40x40' %>
+                </div>
+                <div class="chat-hukidashi">
+                  <strong><%= message.body %></strong> <br>
+                  <%= message.created_at.strftime("%Y-%m-%d %H:%M")%>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="posts">
+          <%= form_with model: [@room, @message], local: true do |f| %>
+            <%= f.text_field :body, placeholder: "メッセージを入力して下さい" , size: 70, class:"form-text-field" %>
+            <%= f.hidden_field :room_id, value: @room.id %>
+            <%= f.submit "投稿",class: 'form-submit'%>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div class="chats">
-  <div class="chat">
-    <% if @messages.present? %>
-      <% @messages.each do |message| %>
-        <div class="chat-box">
-          <div class="chat-face">
-            <%= image_tag message.user.get_profile_image, size: '30x30' %>
-          </div>
-          <div class="chat-hukidashi">
-            <strong><%= message.body %></strong> <br>
-            <%= message.created_at.strftime("%Y-%m-%d %H:%M")%>
-          </div>
-        </div>
-      <% end %>
-    <% end %>
-  </div>
-  <div class="posts">
-    <%= form_with model: [@room, @message], local: true do |f| %>
-      <%= f.text_field :body, placeholder: "メッセージを入力して下さい" , size: 70, class:"form-text-field" %>
-      <%= f.hidden_field :room_id, value: @room.id %>
-      <%= f.submit "投稿",class: 'form-submit'%>
-    <% end %>
-  </div>
-</div>
+
+
+

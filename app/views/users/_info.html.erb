@@ -20,12 +20,18 @@
 
 <div class='row'>
   <% if user == current_user %>
+    <div class='mx-auto'>
+      <%= link_to rooms_path(user),class: 'btn btn-info rounded-pill m-1' do %>
+        <i class="fas fa-envelope"></i> Your DM
+      <%end%>
+    </div>
     <%= link_to edit_user_path(user), class: "btn btn-outline-secondary btn-block" do %>
       <i class="fas fa-user-cog"></i>
     <% end %>
+
   <% else %>
     <%= render 'relationships/fbtn', user: user %>
     <%= render 'users/dmroom', user: user %>
   <% end %>
-  
+
 </div>
