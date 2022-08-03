@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  get 'messages/create'
+  get 'rooms/create'
+  get 'rooms/show'
+  get 'create/show'
   root to: "homes#top"
   get "home/about" => "homes#about",as: "about"
   get "search" => "searches#search"
@@ -15,7 +19,8 @@ Rails.application.routes.draw do
     get 'followers' => 'relationships#followers', as: 'followers'
   end
 
-
-
+  resources :rooms, only: [:create,:show,:index] do
+    resources :messages, only: [:create]
+  end
 
 end
