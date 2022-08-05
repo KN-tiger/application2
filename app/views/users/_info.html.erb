@@ -19,6 +19,7 @@
 </table>
 
 <div class='row'>
+  
   <% if user == current_user %>
     <div class='mx-auto'>
       <%= link_to rooms_path(user),class: 'btn btn-info rounded-pill m-1' do %>
@@ -28,7 +29,10 @@
     <%= link_to edit_user_path(user), class: "btn btn-outline-secondary btn-block" do %>
       <i class="fas fa-user-cog"></i>
     <% end %>
-
+  <% elsif user.name != "guestuser" %>
+    <div class='row'>
+      <%= link_to '',edit_user_path(user),class: "btn btn-outline-secondary btn-block fas fa-user-cog edit_user_#{user.id}" %>
+    </div>
   <% else %>
     <%= render 'relationships/fbtn', user: user %>
     <%= render 'users/dmroom', user: user %>
